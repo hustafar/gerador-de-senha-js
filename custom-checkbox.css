@@ -1,0 +1,75 @@
+/* Customização da label */
+.cbxLbl {
+  display: block;
+  position: relative;
+  font-size: 1rem;
+  padding-left: 1.2rem;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cbxLbl + .cbxLbl {
+  margin-top: 0.375rem;
+}
+
+/* Esconde checkbox padrão do navegador */
+.cbxLbl input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.cbxLbl:focus-within input ~ .checkmark {
+  box-shadow: 0 0 0 2px var(--focus-border-color);
+}
+
+.cbxLbl:focus-within input:checked ~ .checkmark {
+  background-color: var(--focus-shadow-color);
+}
+
+/* Customização do checkmark criado */
+.cbxLbl .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1rem;
+  width: 1rem;
+  background-color: var(--border-color);
+  transition: 0.2s;
+}
+
+/* Hover e checked do checkmark */
+.cbxLbl:hover input ~ .checkmark {
+  filter: brightness(0.9);
+}
+
+.cbxLbl input:checked ~ .checkmark {
+  background-color: var(--focus-border-color);
+}
+
+.cbxLbl .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.cbxLbl input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.cbxLbl .checkmark:after {
+  left: 0.3rem;
+  top: 0.125rem;
+  width: 0.25rem;
+  height: 0.5rem;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
