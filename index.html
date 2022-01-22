@@ -14,7 +14,7 @@
       <div class="gerador-container">
         <h3 class="gerador-title">Gerador de Senhas</h3>
         <div class="gerador-password border-focus">
-          <input class="gerador-input" placeholder="Sua nova senha aparecerá aqui" readonly type="text" />
+          <input class="gerador-input" placeholder="Sua nova senha aparecerá aqui" type="text" />
           <div class="gerador-copy">
             <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="copy" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-copy fa-w-14 fa-2x">
               <path
@@ -41,45 +41,45 @@
               <input id="size" class="border-focus" name="size" type="number" min="1" max="50" size="2" value="10" />
             </label>
           </div>
-          <div class="class2">
+          <div>
             <!-- <label for="radio1">Fácil de pronunciar<input type="checkbox" /><span class="checkmark"></span></label>
             <label for="radio2">Fácil de ler<input type="checkbox" /><span class="checkmark"></span></label>
             <label for="radio3">Todos os caracteres<input type="checkbox" /><span class="checkmark"></span></label> -->
             <label class="radioLbl">
               Fácil de pronunciar
-              <input type="radio" checked="checked" name="radio" />
+              <input type="radio" checked="checked" name="limitations" value="pronounce" />
               <span class="checkmark"></span>
             </label>
             <label class="radioLbl">
               Fácil de ler
-              <input type="radio" checked="checked" name="radio" />
+              <input type="radio" checked="checked" name="limitations" value="read" />
               <span class="checkmark"></span>
             </label>
             <label class="radioLbl">
               Todos os caracteres
-              <input type="radio" checked="checked" name="radio" />
+              <input type="radio" checked="checked" name="limitations" value="all" checked />
               <span class="checkmark"></span>
             </label>
           </div>
           <div>
             <label class="cbxLbl">
               Letra maiúscula
-              <input type="checkbox" />
+              <input id="cbxUpperCase" checked type="checkbox" />
               <span class="checkmark"></span>
             </label>
             <label class="cbxLbl">
               Letra minúscula
-              <input type="checkbox" />
+              <input id="cbxLowerCase" checked type="checkbox" />
               <span class="checkmark"></span>
             </label>
             <label class="cbxLbl">
               Números
-              <input type="checkbox" />
+              <input id="cbxNumber" checked type="checkbox" />
               <span class="checkmark"></span>
             </label>
             <label class="cbxLbl">
               Símbolos
-              <input type="checkbox" />
+              <input id="cbxSymbol" checked type="checkbox" />
               <span class="checkmark"></span>
             </label>
           </div>
