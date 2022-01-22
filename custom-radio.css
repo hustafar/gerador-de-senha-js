@@ -25,8 +25,9 @@
 /* Customização do checkmark criado */
 .radioLbl .checkmark {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
+  transform: translate3d(0, -50%, 0);
   height: 1rem;
   width: 1rem;
   background-color: var(--border-color);

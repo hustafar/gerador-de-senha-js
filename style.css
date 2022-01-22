@@ -169,6 +169,7 @@ body {
 .gerador-configs {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
 }
 
 /* Customização do botão de envio de formulário */
@@ -194,15 +195,21 @@ body {
 
 @media (max-width: 750px) {
   .gerador-configs {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .gerador-configs > * + * {
-    margin-top: 1rem;
+  .password-size {
+    grid-column: 1 / -1;
   }
 
   .password-size input {
     margin-top: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .gerador-configs {
+    grid-template-columns: 1fr;
   }
 }
 
