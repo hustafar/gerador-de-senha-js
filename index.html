@@ -14,7 +14,7 @@
       <div class="gerador-container">
         <h3 class="gerador-title">Gerador de Senhas</h3>
         <div class="gerador-password border-focus">
-          <input class="gerador-input" placeholder="Sua nova senha aparecerá aqui" type="text" />
+          <input class="gerador-input" placeholder="Sua nova senha aparecerá aqui" type="text" readonly />
           <div class="gerador-copy">
             <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="copy" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-copy fa-w-14 fa-2x">
               <path
@@ -34,7 +34,7 @@
             </svg>
           </div>
         </div>
-        <form class="gerador-configs">
+        <form method="POST" class="gerador-configs">
           <div class="password-size">
             <label for="size">
               <span>Tamanho da Senha:</span>

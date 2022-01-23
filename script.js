@@ -35,12 +35,12 @@ function checkInput(e) {
 }
 
 function generatePassword(newPassword, limitation, cbxUpperCase, cbxLowerCase, cbxNumber, cbxSymbol) {
-  const arrOptions = ['upperCase', 'lowerCase', 'number', 'symbol'];
-
-  const regexUpperCase = /[A-Z]/;
-  const regexLowerCase = /[a-z]/;
-  const regexNumber = /[0-9]/;
-  const regexSymbol = /[\!\#\$\%\&\(\)\/\*\-\+\~\^]/;
+  const arrOptions = [];
+  // 'upperCase', 'lowerCase', 'number', 'symbol'
+  if (cbxUpperCase) arrOptions.push('upperCase');
+  if (cbxLowerCase) arrOptions.push('lowerCase');
+  if (cbxNumber) arrOptions.push('number');
+  if (cbxSymbol) arrOptions.push('symbol');
 
   const allUpperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   const allLowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
@@ -48,27 +48,49 @@ function generatePassword(newPassword, limitation, cbxUpperCase, cbxLowerCase, c
   const allSymbols = ['!', '#', '$', '%', '&', '(', ')', '/', '*', '-', '+', '~', '^'];
 
   let tempPassword = '';
+  let limitToRepeat = 3;
+  let timesRepeated = 0;
   let lastOption = '';
   let newAlpha = '';
 
   while (tempPassword.length < Number(newPassword)) {
-    switch (arrOptions[Math.floor(Math.random() * arrOptions.length)]) {
+    let option = arrOptions[Math.floor(Math.random() * arrOptions.length)];
+    let timesToRepeat = Math.floor(Math.random() * limitToRepeat) + 1;
+
+    if (arrOptions.length >= 2) {
+      while (lastOption === option) {
+        option = arrOptions[Math.floor(Math.random() * arrOptions.length)];
+      }
+    }
+
+    if (tempPassword.length + timesToRepeat > Number(newPassword)) timesToRepeat = Number(newPassword) - tempPassword.length;
+
+    switch (option) {
       case 'upperCase':
-        newAlpha = allUpperCase[Math.floor(Math.random() * (allUpperCase.length - 1))];
+        lastOption = 'upperCase';
+        for (i = 0; i < timesToRepeat; i++) newAlpha += allUpperCase[Math.floor(Math.random() * allLowerCase.length)];
+        timesRepeated = 0;
         break;
       case 'lowerCase':
-        newAlpha = allLowerCase[Math.floor(Math.random() * (allLowerCase.length - 1))];
+        lastOption = 'lowerCase';
+        for (i = 0; i < timesToRepeat; i++) newAlpha += allLowerCase[Math.floor(Math.random() * allLowerCase.length)];
+        timesRepeated = 0;
         break;
       case 'number':
-        newAlpha = allNumbers[Math.floor(Math.random() * (allNumbers.length - 1))];
+        lastOption = 'number';
+        for (i = 0; i < timesToRepeat; i++) newAlpha += allNumbers[Math.floor(Math.random() * allNumbers.length)];
+        timesRepeated = 0;
         break;
       case 'symbol':
-        newAlpha = allSymbols[Math.floor(Math.random() * (allSymbols.length - 1))];
+        lastOption = 'symbol';
+        for (i = 0; i < timesToRepeat; i++) newAlpha += allSymbols[Math.floor(Math.random() * allSymbols.length)];
+        timesRepeated = 0;
         break;
       default:
         break;
     }
     tempPassword += newAlpha;
+    newAlpha = '';
   }
 
   return tempPassword;
