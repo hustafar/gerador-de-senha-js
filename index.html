@@ -35,31 +35,25 @@
           </div>
         </div>
         <form method="POST" class="gerador-configs">
-          <div class="password-size">
-            <label for="size">
-              <span>Tamanho da Senha:</span>
-              <input id="size" class="border-focus" name="size" type="number" min="1" max="50" size="2" value="10" />
-            </label>
-          </div>
           <div>
-            <!-- <label for="radio1">Fácil de pronunciar<input type="checkbox" /><span class="checkmark"></span></label>
-            <label for="radio2">Fácil de ler<input type="checkbox" /><span class="checkmark"></span></label>
-            <label for="radio3">Todos os caracteres<input type="checkbox" /><span class="checkmark"></span></label> -->
-            <label class="radioLbl">
-              Fácil de pronunciar
-              <input type="radio" checked="checked" name="limitations" value="pronounce" />
-              <span class="checkmark"></span>
-            </label>
-            <label class="radioLbl">
-              Fácil de ler
-              <input type="radio" checked="checked" name="limitations" value="read" />
-              <span class="checkmark"></span>
-            </label>
-            <label class="radioLbl">
-              Todos os caracteres
-              <input type="radio" checked="checked" name="limitations" value="all" checked />
-              <span class="checkmark"></span>
-            </label>
+            <div class="password-size">
+              <label for="size">
+                <span>Tamanho da Senha:</span>
+                <input id="size" class="border-focus" name="size" type="number" min="1" max="50" value="10" />
+              </label>
+            </div>
+            <div class="password-repeat">
+              <label for="repeat">
+                <span>Repetição máxima:</span>
+                <input id="repeat" class="border-focus" name="repeat" type="number" min="1" max="5" value="3" />
+              </label>
+            </div>
+            <div class="password-symbols">
+              <label for="symbols">
+                <span>Símbolos:</span>
+                <input id="symbols" class="border-focus" name="symbols" type="text" min="1" max="50" value="!#$%&()/*-+~^" />
+              </label>
+            </div>
           </div>
           <div>
             <label class="cbxLbl">
