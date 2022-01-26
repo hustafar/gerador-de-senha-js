@@ -34,7 +34,7 @@ function checkInput(e) {
   if (Number(value) < Number(min)) target.value = min;
 }
 
-function generatePassword(newPassword, limitation, cbxUpperCase, cbxLowerCase, cbxNumber, cbxSymbol) {
+function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cbxSymbol) {
   const arrOptions = [];
   // 'upperCase', 'lowerCase', 'number', 'symbol'
   if (cbxUpperCase) arrOptions.push('upperCase');
@@ -100,24 +100,12 @@ function handleSubmit(e) {
   if (e) e.preventDefault();
   const output = document.querySelector('.gerador-input');
 
-  var limitations = document.getElementsByName('limitations');
-  let limitation;
-
-  for (i = 0; i < limitations.length; i++) {
-    if (limitations[i].checked) {
-      limitation = limitations[i];
-      break;
-    }
-  }
-
-  if (!limitation) limitation = limitations[limitations.length - 1];
-
   const cbxUpperCase = document.querySelector('#cbxUpperCase');
   const cbxLowerCase = document.querySelector('#cbxLowerCase');
   const cbxNumber = document.querySelector('#cbxNumber');
   const cbxSymbol = document.querySelector('#cbxSymbol');
 
-  output.value = generatePassword(sizePassword.value, limitation.value, cbxUpperCase.checked, cbxLowerCase.checked, cbxNumber.checked, cbxSymbol.checked);
+  output.value = generatePassword(sizePassword.value, cbxUpperCase.checked, cbxLowerCase.checked, cbxNumber.checked, cbxSymbol.checked);
 }
 
 window.addEventListener('load', showContainer);
