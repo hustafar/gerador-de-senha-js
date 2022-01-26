@@ -1,6 +1,8 @@
 const activeClass = 'active';
 const reloadButton = document.querySelector('.gerador-reload');
 const sizePassword = document.querySelector('#size');
+const repeatPassword = document.querySelector('#repeat');
+const symbolsPassword = document.querySelector('#symbols');
 const formGeneratePassword = document.querySelector('.gerador-configs');
 
 function showContainer() {
@@ -11,10 +13,10 @@ function showContainer() {
 
 function addRotateClass() {
   reloadButton.classList.add('rotateAnimation');
+  handleSubmit();
 
   setTimeout(() => {
     reloadButton.classList.remove('rotateAnimation');
-    handleSubmit();
   }, 500);
 }
 
@@ -36,7 +38,6 @@ function checkInput(e) {
 
 function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cbxSymbol) {
   const arrOptions = [];
-  // 'upperCase', 'lowerCase', 'number', 'symbol'
   if (cbxUpperCase) arrOptions.push('upperCase');
   if (cbxLowerCase) arrOptions.push('lowerCase');
   if (cbxNumber) arrOptions.push('number');
@@ -45,10 +46,10 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
   const allUpperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
   const allLowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
   const allNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-  const allSymbols = ['!', '#', '$', '%', '&', '(', ')', '/', '*', '-', '+', '~', '^'];
+  let allSymbols = symbolsPassword.value ? [...symbolsPassword.value] : ['!', '#', '$', '%', '&', '(', ')', '/', '*', '-', '+', '~', '^'];
 
   let tempPassword = '';
-  let limitToRepeat = 3;
+  let limitToRepeat = Number(repeatPassword.value);
   let timesRepeated = 0;
   let lastOption = '';
   let newAlpha = '';
@@ -83,7 +84,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
         break;
       case 'symbol':
         lastOption = 'symbol';
-        for (i = 0; i < timesToRepeat; i++) newAlpha += allSymbols[Math.floor(Math.random() * allSymbols.length)];
+        if (allSymbols) for (i = 0; i < timesToRepeat; i++) newAlpha += allSymbols[Math.floor(Math.random() * allSymbols.length)];
         timesRepeated = 0;
         break;
       default:
@@ -112,4 +113,6 @@ window.addEventListener('load', showContainer);
 reloadButton.addEventListener('click', addRotateClass);
 sizePassword.addEventListener('keydown', blockNonNumbers);
 sizePassword.addEventListener('change', checkInput);
+repeatPassword.addEventListener('keydown', blockNonNumbers);
+repeatPassword.addEventListener('change', checkInput);
 formGeneratePassword.addEventListener('submit', handleSubmit);
