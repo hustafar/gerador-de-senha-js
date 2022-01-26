@@ -1,6 +1,6 @@
 # Gerador de senhas JS
 
-Esse projeto pretende ser um gerador de senhas seguras com filtros para se adaptar a diversas restrições impostas por sistemas para os quais a senha será usada.
+O projeto trata-se de um gerador de senhas seguras com filtros para se adaptar a diversas restrições impostas por sistemas para os quais a senha será usada.
 
 ## Disponibilização
 
@@ -16,7 +16,7 @@ Os filtros que o projeto conta são:
   1. Letras maiúculas
   2. Letras minusculas
   3. Números
-  4. Símbolos (possibilidades: '!', '#', '$', '%', '&', '(', ')', '/', '\*', '-', '+', '~', '^')
+  4. Símbolos (possibilidades: '!', '#', '$', '%', '&', '(', ')', '/', '\*', '-', '+', '~', '^') *é possível personalizar essa seleção, caso o campo esteja vazio ela usa a lista original
 
 ## Stack utilizada
 
@@ -29,3 +29,4 @@ Para esse projeto as tecnologias utilizadas foram:
 ## Autores
 
 - [@hustafar](https://github.com/hustafar)
+
