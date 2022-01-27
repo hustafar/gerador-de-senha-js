@@ -96,7 +96,7 @@ body {
 /* Definindo tamanho máximo para o corpo do conteúdo, espaçamento entre filhos e definindo animação para load */
 
 .gerador-container {
-  width: max(40vw, min(750px, 100%));
+  width: max(40vw, min(45rem, 100%));
   background-color: var(--gerador-bg-color);
   border-radius: 10px;
   padding: 0.5rem 0.625rem;
@@ -121,7 +121,30 @@ body {
   justify-content: space-between;
   width: 100%;
   padding: 0.25rem;
+  position: relative;
+  transition: 0.5s;
 }
+
+.gerador-password.copy::after {
+  content: 'Copiado!';
+  position: absolute;
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
+  font-size: 1.25rem;
+  width: 6em;
+  color: var(--primary-text-color);
+  background-color: var(--body-bg-color);
+  text-align: center;
+  padding: 0.2em 0;
+  border: 1px solid var(--svg-fill-color);
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: -2em;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
 .gerador-input,
 .gerador-reload,
 .gerador-copy {
@@ -163,7 +186,8 @@ body {
 }
 
 .gerador-reload:hover > svg > path,
-.gerador-copy:hover > svg > path {
+.gerador-copy:hover > svg > path,
+.gerador-input:focus ~ .gerador-copy > svg > path {
   fill: var(--focus-border-color);
   filter: brightness(1.1);
 }
@@ -186,6 +210,13 @@ body {
   margin-top: 1rem;
 }
 
+.password-size,
+.password-repeat,
+.password-symbols,
+.cbx-form {
+  margin: 0.2rem 0;
+}
+
 .password-size label,
 .password-repeat label,
 .password-symbols label {
@@ -199,7 +230,6 @@ body {
 .password-symbols input {
   width: 6rem;
   padding: 0.5rem;
-  margin: 0.2rem 0;
 }
 
 .password-symbols input {
@@ -214,7 +244,7 @@ body {
 
 /* Mobile */
 
-@media (max-width: 750px) {
+@media (max-width: 45rem) {
   .gerador-configs {
     grid-template-columns: 1fr;
   }
