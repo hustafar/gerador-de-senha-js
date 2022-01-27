@@ -1,4 +1,7 @@
 const activeClass = 'active';
+const containerPassword = document.querySelector('.gerador-password');
+const output = document.querySelector('.gerador-input');
+const copyPassword = document.querySelector('.gerador-copy');
 const reloadButton = document.querySelector('.gerador-reload');
 const sizePassword = document.querySelector('#size');
 const repeatPassword = document.querySelector('#repeat');
@@ -99,7 +102,6 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
 
 function handleSubmit(e) {
   if (e) e.preventDefault();
-  const output = document.querySelector('.gerador-input');
 
   const cbxUpperCase = document.querySelector('#cbxUpperCase');
   const cbxLowerCase = document.querySelector('#cbxLowerCase');
@@ -109,6 +111,18 @@ function handleSubmit(e) {
   output.value = generatePassword(sizePassword.value, cbxUpperCase.checked, cbxLowerCase.checked, cbxNumber.checked, cbxSymbol.checked);
 }
 
+function copiaSenha() {
+  if (output.value) {
+    containerPassword.classList.add('copy');
+    output.focus();
+    navigator.clipboard.writeText(output.value);
+    setTimeout(() => {
+      output.blur();
+      containerPassword.classList.remove('copy');
+    }, 2000);
+  }
+}
+
 window.addEventListener('load', showContainer);
 reloadButton.addEventListener('click', addRotateClass);
 sizePassword.addEventListener('keydown', blockNonNumbers);
@@ -116,3 +130,5 @@ sizePassword.addEventListener('change', checkInput);
 repeatPassword.addEventListener('keydown', blockNonNumbers);
 repeatPassword.addEventListener('change', checkInput);
 formGeneratePassword.addEventListener('submit', handleSubmit);
+output.addEventListener('click', copiaSenha);
+copyPassword.addEventListener('click', copiaSenha);
