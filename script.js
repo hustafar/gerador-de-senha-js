@@ -112,7 +112,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
     switch (option) {
       case 'upperCase':
         lastOption = 'upperCase';
-        for (i = 0; i < timesToRepeat; i++) newAlpha += allUpperCase[Math.floor(Math.random() * allLowerCase.length)];
+        for (i = 0; i < timesToRepeat; i++) newAlpha += allUpperCase[Math.floor(Math.random() * allUpperCase.length)];
         timesRepeated = 0;
         break;
       case 'lowerCase':
@@ -133,6 +133,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
       default:
         break;
     }
+
     tempPassword += newAlpha;
     newAlpha = '';
   }
