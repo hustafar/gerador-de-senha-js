@@ -56,16 +56,56 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
   let timesRepeated = 0;
   let lastOption = '';
   let newAlpha = '';
+  let lastTimesToRepeat = 0;
+
+  let upperChanceWeight = arrOptions.filter((valor) => valor === 'upperCase').length > 0 ? 0 : -1;
+  let lowerChanceWeight = arrOptions.filter((valor) => valor === 'lowerCase').length > 0 ? 0 : -1;
+  let numberChanceWeight = arrOptions.filter((valor) => valor === 'number').length > 0 ? 0 : -1;
+  let symbolChanceWeight = arrOptions.filter((valor) => valor === 'symbol').length > 0 ? 0 : -1;
 
   while (tempPassword.length < Number(newPassword)) {
-    let option = arrOptions[Math.floor(Math.random() * arrOptions.length)];
-    let timesToRepeat = Math.floor(Math.random() * limitToRepeat) + 1;
+    let option;
+    let chosenIndex;
 
-    if (arrOptions.length >= 2) {
-      while (lastOption === option) {
-        option = arrOptions[Math.floor(Math.random() * arrOptions.length)];
-      }
+    do {
+      let arrChanceWeight = [];
+      if (upperChanceWeight >= 0) arrChanceWeight.push(Math.random() * (upperChanceWeight + 1));
+      if (lowerChanceWeight >= 0) arrChanceWeight.push(Math.random() * (lowerChanceWeight + 1));
+      if (numberChanceWeight >= 0) arrChanceWeight.push(Math.random() * (numberChanceWeight + 1));
+      if (symbolChanceWeight >= 0) arrChanceWeight.push(Math.random() * (symbolChanceWeight + 1));
+
+      chosenIndex = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
+      option = arrOptions[chosenIndex];
+    } while (lastOption === option);
+
+    console.log(upperChanceWeight, lowerChanceWeight, numberChanceWeight, symbolChanceWeight);
+    let timesToRepeat;
+
+    if (limitToRepeat > 2) {
+      do {
+        timesToRepeat = Math.floor(Math.random() * limitToRepeat) + 1;
+        console.log(timesToRepeat);
+      } while (lastTimesToRepeat === timesToRepeat);
+    } else {
+      timesToRepeat = Math.floor(Math.random() * limitToRepeat) + 1;
     }
+
+    switch (arrOptions[chosenIndex]) {
+      case 'upperCase':
+        upperChanceWeight += 1 * timesToRepeat;
+        break;
+      case 'lowerCase':
+        lowerChanceWeight += 1 * timesToRepeat;
+        break;
+      case 'number':
+        numberChanceWeight += 1 * timesToRepeat;
+        break;
+      case 'symbol':
+        symbolChanceWeight += 1 * timesToRepeat;
+        break;
+    }
+
+    lastTimesToRepeat = timesToRepeat;
 
     if (tempPassword.length + timesToRepeat > Number(newPassword)) timesToRepeat = Number(newPassword) - tempPassword.length;
 
