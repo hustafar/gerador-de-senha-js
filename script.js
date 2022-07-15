@@ -47,13 +47,20 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
   if (cbxSymbol) arrOptions.push('symbol');
 
   const allUpperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+  let allUpperCaseChanceWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   const allLowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  let allLowerCaseChanceWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   const allNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-  let allSymbols = symbolsPassword.value ? [...symbolsPassword.value] : ['!', '#', '$', '%', '&', '(', ')', '/', '*', '-', '+', '~', '^'];
+  let allNumbersChanceWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  const allSymbols = symbolsPassword.value ? [...symbolsPassword.value] : ['!', '#', '$', '%', '&', '(', ')', '/', '*', '-', '+', '~', '^'];
+  let allSymbolsChanceWeight = [];
+
+  allSymbols.map((symbol) => {
+    allSymbolsChanceWeight.push(0);
+  });
 
   let tempPassword = '';
   let limitToRepeat = Number(repeatPassword.value);
-  let timesRepeated = 0;
   let lastOption = '';
   let newAlpha = '';
   let lastTimesToRepeat = 0;
@@ -67,24 +74,28 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
     let option;
     let chosenIndex;
 
-    do {
-      let arrChanceWeight = [];
-      if (upperChanceWeight >= 0) arrChanceWeight.push(Math.random() * (upperChanceWeight + 1));
-      if (lowerChanceWeight >= 0) arrChanceWeight.push(Math.random() * (lowerChanceWeight + 1));
-      if (numberChanceWeight >= 0) arrChanceWeight.push(Math.random() * (numberChanceWeight + 1));
-      if (symbolChanceWeight >= 0) arrChanceWeight.push(Math.random() * (symbolChanceWeight + 1));
+    if (arrOptions.length >= 2) {
+      do {
+        let arrChanceWeight = [];
+        if (upperChanceWeight >= 0) arrChanceWeight.push(Math.random() * (upperChanceWeight + 1));
+        if (lowerChanceWeight >= 0) arrChanceWeight.push(Math.random() * (lowerChanceWeight + 1));
+        if (numberChanceWeight >= 0) arrChanceWeight.push(Math.random() * (numberChanceWeight + 1));
+        if (symbolChanceWeight >= 0) arrChanceWeight.push(Math.random() * (symbolChanceWeight + 1));
 
-      chosenIndex = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
-      option = arrOptions[chosenIndex];
-    } while (lastOption === option);
+        console.log(arrChanceWeight);
 
-    console.log(upperChanceWeight, lowerChanceWeight, numberChanceWeight, symbolChanceWeight);
+        chosenIndex = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
+        option = arrOptions[chosenIndex];
+      } while (lastOption === option);
+    } else {
+      option = arrOptions[0];
+    }
+
     let timesToRepeat;
 
     if (limitToRepeat > 2) {
       do {
         timesToRepeat = Math.floor(Math.random() * limitToRepeat) + 1;
-        console.log(timesToRepeat);
       } while (lastTimesToRepeat === timesToRepeat);
     } else {
       timesToRepeat = Math.floor(Math.random() * limitToRepeat) + 1;
@@ -112,23 +123,61 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
     switch (option) {
       case 'upperCase':
         lastOption = 'upperCase';
-        for (i = 0; i < timesToRepeat; i++) newAlpha += allUpperCase[Math.floor(Math.random() * allUpperCase.length)];
-        timesRepeated = 0;
+        for (i = 0; i < timesToRepeat; i++) {
+          let arrChanceWeight = [];
+
+          allUpperCaseChanceWeight.map((chance) => {
+            arrChanceWeight.push(Math.random() * (chance + 1));
+          });
+
+          const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
+          newAlpha += allUpperCase[chosenChar];
+          allUpperCaseChanceWeight[chosenChar] += 1;
+        }
         break;
       case 'lowerCase':
         lastOption = 'lowerCase';
-        for (i = 0; i < timesToRepeat; i++) newAlpha += allLowerCase[Math.floor(Math.random() * allLowerCase.length)];
-        timesRepeated = 0;
+        for (i = 0; i < timesToRepeat; i++) {
+          let arrChanceWeight = [];
+
+          allLowerCaseChanceWeight.map((chance) => {
+            arrChanceWeight.push(Math.random() * (chance + 1));
+          });
+
+          const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
+          newAlpha += allLowerCase[chosenChar];
+          allLowerCaseChanceWeight[chosenChar] += 1;
+        }
         break;
       case 'number':
         lastOption = 'number';
-        for (i = 0; i < timesToRepeat; i++) newAlpha += allNumbers[Math.floor(Math.random() * allNumbers.length)];
-        timesRepeated = 0;
+        for (i = 0; i < timesToRepeat; i++) {
+          let arrChanceWeight = [];
+
+          allNumbersChanceWeight.map((chance) => {
+            arrChanceWeight.push(Math.random() * (chance + 1));
+          });
+
+          const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
+          newAlpha += allNumbers[chosenChar];
+          allNumbersChanceWeight[chosenChar] += 1;
+        }
         break;
       case 'symbol':
         lastOption = 'symbol';
-        if (allSymbols) for (i = 0; i < timesToRepeat; i++) newAlpha += allSymbols[Math.floor(Math.random() * allSymbols.length)];
-        timesRepeated = 0;
+        if (allSymbols) {
+          for (i = 0; i < timesToRepeat; i++) {
+            let arrChanceWeight = [];
+
+            allSymbolsChanceWeight.map((chance) => {
+              arrChanceWeight.push(Math.random() * (chance + 1));
+            });
+
+            const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
+            newAlpha += allSymbols[chosenChar];
+            allSymbolsChanceWeight[chosenChar] += 1;
+          }
+        }
         break;
       default:
         break;
