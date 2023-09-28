@@ -47,11 +47,26 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
   if (cbxSymbol) arrOptions.push('symbol');
 
   const allUpperCase = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  let allUpperCaseChanceWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let allUpperCaseChanceWeight = [];
+
+  allUpperCase.map((symbol) => {
+    allUpperCaseChanceWeight.push(0);
+  });
+
   const allLowerCase = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-  let allLowerCaseChanceWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let allLowerCaseChanceWeight = [];
+
+  allLowerCase.map((symbol) => {
+    allLowerCaseChanceWeight.push(0);
+  });
+
   const allNumbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-  let allNumbersChanceWeight = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let allNumbersChanceWeight = [];
+
+  allNumbers.map((symbol) => {
+    allNumbersChanceWeight.push(0);
+  });
+
   const allSymbols = symbolsPassword.value ? [...symbolsPassword.value] : ['!', '#', '$', '%', '&', '(', ')', '/', '*', '-', '+', '~', '^'];
   let allSymbolsChanceWeight = [];
 
@@ -81,7 +96,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
         if (lowerChanceWeight >= 0) arrChanceWeight.push(Math.random() * (lowerChanceWeight + 1));
         if (numberChanceWeight >= 0) arrChanceWeight.push(Math.random() * (numberChanceWeight + 1));
         if (symbolChanceWeight >= 0) arrChanceWeight.push(Math.random() * (symbolChanceWeight + 1));
-
+        
         chosenIndex = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
         option = arrOptions[chosenIndex];
       } while (lastOption === option);
@@ -101,16 +116,16 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
 
     switch (arrOptions[chosenIndex]) {
       case 'upperCase':
-        upperChanceWeight += 3 * timesToRepeat;
+        upperChanceWeight += 2 * timesToRepeat;
         break;
       case 'lowerCase':
-        lowerChanceWeight += 3 * timesToRepeat;
+        lowerChanceWeight += 2 * timesToRepeat;
         break;
       case 'number':
-        numberChanceWeight += 3 * timesToRepeat;
+        numberChanceWeight += 2 * timesToRepeat;
         break;
       case 'symbol':
-        symbolChanceWeight += 3 * timesToRepeat;
+        symbolChanceWeight += 2 * timesToRepeat;
         break;
     }
 
@@ -130,6 +145,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
 
           const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
           newAlpha += allUpperCase[chosenChar];
+          if (allUpperCaseChanceWeight[chosenChar] === 0) allUpperCaseChanceWeight[chosenChar] = 1
           allUpperCaseChanceWeight[chosenChar] = allUpperCaseChanceWeight[chosenChar] * 3;
         }
         break;
@@ -144,6 +160,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
 
           const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
           newAlpha += allLowerCase[chosenChar];
+          if (allLowerCaseChanceWeight[chosenChar] === 0) allLowerCaseChanceWeight[chosenChar] = 1
           allLowerCaseChanceWeight[chosenChar] = allLowerCaseChanceWeight[chosenChar] * 3;
         }
         break;
@@ -158,6 +175,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
 
           const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
           newAlpha += allNumbers[chosenChar];
+          if (allNumbersChanceWeight[chosenChar] === 0) allNumbersChanceWeight[chosenChar] = 1
           allNumbersChanceWeight[chosenChar] = allNumbersChanceWeight[chosenChar] * 3;
         }
         break;
@@ -173,6 +191,7 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
 
             const chosenChar = arrChanceWeight.indexOf(Math.min(...arrChanceWeight));
             newAlpha += allSymbols[chosenChar];
+            if (allSymbolsChanceWeight[chosenChar] === 0) allSymbolsChanceWeight[chosenChar] = 1
             allSymbolsChanceWeight[chosenChar] = allSymbolsChanceWeight[chosenChar] * 3;
           }
         }
@@ -184,6 +203,11 @@ function generatePassword(newPassword, cbxUpperCase, cbxLowerCase, cbxNumber, cb
     tempPassword += newAlpha;
     newAlpha = '';
   }
+
+  console.log(allUpperCaseChanceWeight);
+  console.log(allLowerCaseChanceWeight);
+  console.log(allNumbersChanceWeight);
+  console.log(allSymbolsChanceWeight);
 
   return tempPassword;
 }
